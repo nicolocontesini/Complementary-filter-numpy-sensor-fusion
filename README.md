@@ -64,12 +64,13 @@ The weight ("alpha", in the equation in the code) assigned to raw data is propor
 Technically speaking, the filter “low passes” the accelerometer and “high passes” the gyroscope.
 Thanks to these two sources and weights, the filter can counterbalance the tendence to drift of the gyroscope and smooth eventual noise spikes detected from the accelerometer.
 
-The time constant tau
+The time constant τ
 In a complementary filter, τ (tau) is the time constant that determines the cutoff frequency between the high-pass filter (for the gyroscope) and the low-pass filter (for the accelerometer). It represents the time scale (in seconds) at which the filter transitions from trusting the gyroscope to trusting the accelerometer.For events shorter than τ seconds, the filter relies mostly on the gyroscope to capture fast movements without vibration noise. For timescales longer than τ seconds, the filter relies on the accelerometer to correct for gyroscope drift.
 
-- Increasing τ (e.g., 1.0 s to 5.0 s): Trusts the gyroscope longer and rejects linear acceleration or mechanical vibrations more aggressively. Use a larger τ if your system experiences sustained accelerations (like a fast-moving drone or car) and has a low-drift gyroscope.
+- Increasing τ (e.g., 1.0 s to 5.0 s): Trusts the gyroscope longer and rejects linear acceleration or mechanical vibrations more aggressively.Larger τ are preferable in sustained-accelerations systems (like a fast-moving drone or car), and a low-drift gyroscope.
 
-- Decreasing τ (e.g., 0.1 s to 0.5 s): Trusts the accelerometer more and corrects gyroscope drift faster. Use a smaller τ if you have a noisy, inexpensive gyroscope that drifts quickly, and your system operates in a relatively    vibration-free environment
+- Decreasing τ (e.g., 0.1 s to 0.5 s): Trusts the accelerometer more and corrects gyroscope drift faster.Smaller τ are preferable when the system operates in a relatively vibration-free environment, and gyroscope drifts quickly.
+
 
 ```math
 \tau = \frac{\alpha \cdot dt}{1 - \alpha}
@@ -107,16 +108,24 @@ The choice of τ depends on the environment the sensor is supposed to be used:
 
 Due to the relationship between α and τ, a precise evaluation for τ is necessary. For example, using α = 0.98 at f = 50 Hz gives τ = 0.98 s; at f = 1 kHz it gives 0.049 s, resulting in very different behaviour. 
 
+In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
+
+### B_max = , noise = mettere varianza, τ
+
+### B_max = , noise = mettere varianza, τ
+
+### B_max = , noise = mettere varianza, τ
 
 
 
 The following section is about the esteem and the comprehension of the filter accuracy, obtained through a mathematical abstraction and analysis. 
-My analysis is based both on the study of variance and graphs for different scenarios, each of them characterized by set weight (alpha), noise (mu/ omega_measured) and drift (B/ B_max).
-So as to provide a simple and clear representation of the filter mechanism, I wrote a program which simulates it
+My analysis is based both on the study of RMSE and graphs for different scenarios, each of them characterized by set weight (alpha), noise (mu/ omega_measured) and drift (B/ B_max).
+So as to provide a simple and clear representation of the filter mechanism, I wrote a program which simulates it.
 
 -	Just like the project objective, this simulation is built upon data acquired from a gyro and an accelerometer
   
--	Np.random.normal function draws random sample values normally distributed around a certain mean value. To get the most realistic value possible, according to the sensitivity toward vibrations (causes of random spikes in the measurement), I set higher spread for the accelerometer (np.random.normal(3.0, 1)). The specific value and spread (3.0 and 1) means that the moving system actually does not experience any change in heading (3.0 degrees). 
+-	Np.random.normal function draws random sample values normally distributed around a certain mean value. To get the most realistic value possible, according to the sensitivity toward vibrations (causes of random spikes in the measurement), I set higher spread for the accelerometer (np.random.normal(3.0, 1)). The specific value and spread (3.0 and 1) means that the moving system actually does not experience any change in heading (3.0 degrees).
+  
 -	Consequently, the angular speed (degree/second) mean has been set to 0.0.
   
 -	For clarity and simplicity, a “complementary angle” value is set to 3.00 degree: it corresponds to the first one obtained.
@@ -134,6 +143,7 @@ As a first take, make reference to the table below
 | 3 | 2.31481 | -0.47217 | 2.93207 |
 | 4 | 2.61712 | -0.40057 | 2.92184 |
 | 5 | 4.28818 (SPIKE!!) | 0.90776 | 2.95806 |
+
   
 The following report shows the results obtained at different set values (I focused on alpha and drift). 
 Note: alpha, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.96 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
@@ -150,11 +160,6 @@ The mean value corresponds to true_angle.
 
 
 
-NOTES TO THE IMAGE "graph.png" in the repository
-
-- the closer to 0 the value of "complementary filter accuracy" is, the more accurate is the correction
-
-- in the graph "complementary angle", it is quite evident the offset, which can be more effectively visualized at higher value of "t"
 
 - the initial error spike in "complementary accuracy" is caused by the filter initialization dynamics, as weighted data integration begins at the second step ("tau" interval)
 
