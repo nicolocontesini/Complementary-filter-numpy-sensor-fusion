@@ -108,13 +108,6 @@ The choice of τ depends on the environment the sensor is supposed to be used:
 
 Due to the relationship between α and τ, a precise evaluation for τ is necessary. For example, using α = 0.98 at f = 50 Hz gives τ = 0.98 s; at f = 1 kHz it gives 0.049 s, resulting in very different behaviour. 
 
-In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
-
-### B_max = , noise = mettere varianza, τ
-
-### B_max = , noise = mettere varianza, τ
-
-### B_max = , noise = mettere varianza, τ
 
 
 
@@ -148,8 +141,16 @@ As a first take, make reference to the table below
 The following report shows the results obtained at different set values (I focused on alpha and drift). 
 Note: alpha, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.96 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
 
-Filter Accuracy Chart
-A graphic oversight for the filter accuracy over time is shown by the results chart: for each "tau", the program computes the difference between the filtered value and the real one (true_angle). 
+In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
+
+### B_max = , noise = mettere varianza, τ
+
+### B_max = , noise = mettere varianza, τ
+
+### B_max = , noise = mettere varianza, τ
+
+
+
 
 RMSE 
 So as to get a visible report of different results obtained through different B_max and k-drift, I decided to make the program compute the RMSE (Root Mean Square Error) for each set of 40 values, where each value correspond to one measurement acquirement from the sensor. 
