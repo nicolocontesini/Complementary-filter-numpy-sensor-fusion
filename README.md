@@ -30,7 +30,9 @@ The filter works assigning specific weights to the measurements provided by the 
 Before moving on a brief description of the two sensors considered for this simulation, consider the following statement, necessary to understand the conclusion drawn from each experiment.
 In the complementary filter, the value of Bias settles at a constant limit, called B_max, described by the following equation:
 
-B_max = B[tau] / 1 – exp(-k_drift * t),
+$$
+B_{\max} = \frac{B[\tau]}{1 - e^{-k_{\text{drift}} \cdot t}}
+$$,
 
 where k is a constant which expresses how “fast” B(tau) is growing to B_max, t stands for time since the filter started.
 Such specification is necessary because, in absence of this formula, the simulation would have lost the crucial detail of the offset: by simply adding B to the to the true angular velocity value, the growing offset would not be visible, since a graph plotting the measured velocity would only represent “true_speed” simply offset of a value B.
@@ -38,7 +40,11 @@ Such specification is necessary because, in absence of this formula, the simulat
 Accelerometer
 
 A 3D accelerometer estimates the tilt angles (pitch and roll) by measuring the projections of the gravity vector. For instance, pitch is computed as:
-theta = arctan(a_x / sqrt((a_y)^2 + (a_z)^2))
+
+$$
+\theta = \arctan\left( \frac{a_x}{\sqrt{a_y^2 + a_z^2}} \right)
+$$
+
 where a represents the acceleration measured along each respective axis (x, y, z). 
 However, accelerometers are highly sensitive to high-frequency noise: mechanical vibrations and external forces temporarily add up to the gravity vector, instantly distorting the true angular measurement.
 For this analysis, I assume that the sensor is only affected from noises from the system’s vibrations, and any static bias has been previously calibrated to zero.
@@ -48,11 +54,15 @@ A 3D gyroscope is a sensor which measures the angular rate by applying the theor
 It is composed of a mass which, when experiences a force, causes a change in the value of capacitance which is then converted into an electrical signal proportional to the angular rate.
 The sensor estimates the value of delta_theta in a 3D space computing
 
-delta_theta = omega * dt ,
+$$
+\Delta\theta = \omega \cdot dt
+$$
 
 where omega must not be intended as the real delta_theta / delta_t, since offset (B) and micro-vibrations (mu) occur:
 
-omega = omega_real + B + mu.
+$$
+\omega = \omega_{\text{real}} + B + \mu
+$$
 
 In my code, I decided to consider a constantly generated Gaussian noise to simulate disturbs such as micro-vibrations :
 omega_measured = true_speed + B + omega_noise.
@@ -99,16 +109,20 @@ where f_c is the frequency at which the filter starts
 
 The choice of τ depends on the environment the sensor is supposed to be used:
 
-| Phenomenom | Prefers | Reason |
-| :--- | :--- | :--- | 
-| Gyro bias | small τ | bτ = \Delta\theta_{\infty} | 
-| Linear acceleration, bumps | Large τ | Disturbance lasts for a time; the filter averages for τ | 
-| Vibrations | Large τ | Attenuation grows with f X τ | 
-| 4 | 2.61712 | -0.40057 | ?????
+| Phenomenon | Prefers | Reason |
+| :--- | :--- | :--- |
+| Gyro bias | Small $\tau$ | $b\tau = \Delta\theta_{\infty}$ |
+| Linear acceleration, bumps | Large $\tau$ | Disturbance lasts for a time; the filter averages for $\tau$ |
+| Vibrations | Large $\tau$ | Attenuation grows with $f \times \tau$ |
+
 
 Due to the relationship between α and τ, a precise evaluation for τ is necessary. For example, using α = 0.98 at f = 50 Hz gives τ = 0.98 s; at f = 1 kHz it gives 0.049 s, resulting in very different behaviour. 
 
 
+
+RMSE 
+So as to get a visible report of different results obtained through different B_max and k-drift, I decided to make the program compute the RMSE (Root Mean Square Error) for each set of 40 values, where each value correspond to one measurement acquirement from the sensor. 
+The mean value corresponds to true_angle.
 
 
 The following section is about the esteem and the comprehension of the filter accuracy, obtained through a mathematical abstraction and analysis. 
@@ -117,7 +131,7 @@ So as to provide a simple and clear representation of the filter mechanism, I wr
 
 -	Just like the project objective, this simulation is built upon data acquired from a gyro and an accelerometer
   
--	Np.random.normal function draws random sample values normally distributed around a certain mean value. To get the most realistic value possible, according to the sensitivity toward vibrations (causes of random spikes in the measurement), I set higher spread for the accelerometer (np.random.normal(3.0, 1)). The specific value and spread (3.0 and 1) means that the moving system actually does not experience any change in heading (3.0 degrees).
+-	Np.random.normal function draws random sample values normally distributed around a certain mean value. To get the most realistic value possible, according to the sensitivity toward vibrations (causes of random spikes in the  measurement), I set higher spread for the accelerometer (np.random.normal(3.0, 1)). The specific value and spread (3.0 and 1) means that the moving system actually does not experience any change in heading (3.0 degrees).
   
 -	Consequently, the angular speed (degree/second) mean has been set to 0.0.
   
@@ -143,32 +157,51 @@ Note: alpha, representing the weight assigned to the two sensors, is usually a v
 
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
-### B_max = , noise = mettere varianza, τ
+### B_max = 1.25 °/s, noise = (0.0, 0.50), τ = 0.25 s
+[Comparison](percorso/della/tua/immagine.png)
 
-### B_max = , noise = mettere varianza, τ
+[RMSE](percorso/della/tua/immagine.png)
 
-### B_max = , noise = mettere varianza, τ
+### B_max = 1.25 °/s, noise = (0.0, 0.75), τ = 0.25 s
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 1.25 °/s, noise = (0.0, 0.75), τ = 0.50 s
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 1.00 °/s, noise = (0.0, 0.75), τ = 0.50 s
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 2.00 °/s , noise = (0.0, 0.75), τ = 0.15 s
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 2.00 °/s , noise = (0.0, 1.00), τ = 0.15 s
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
 
 
 
 
-RMSE 
-So as to get a visible report of different results obtained through different B_max and k-drift, I decided to make the program compute the RMSE (Root Mean Square Error) for each set of 40 values, where each value correspond to one measurement acquirement from the sensor. 
-The mean value corresponds to true_angle.
-
-
-
-
-
-
-
-- the initial error spike in "complementary accuracy" is caused by the filter initialization dynamics, as weighted data integration begins at the second step ("tau" interval)
 
 
 
 
 ___________________________________________________________________________________________________________________________________________________________________________________
 
+• Drones and UAVs: Estimates roll, pitch, and yaw from IMU sensors (accelerometers, gyroscopes, and magnetometers) on resource-constrained flight controllers.
+• Robotics and High-Vibration Environments: Tracks orientation when low compute overhead or resilience to vibration/over-ranging is needed.
+• Wearables, Gait, and Biomechanics: Measures human locomotion, pedestrian navigation, or animal movement by separating slow orientation changes, mid-frequency gait, and fast strikes or vibrations.
+• VR/AR: Provides responsive head or device tilt tracking using low-cost MEMS sensors.
+• Signal and Audio Processing: Splits signals into complementary frequency bands (such as power- or delay-complementary filter pairs) for crossover networks and sub-band processing.
+ 
 Among everyday applications, a notable one is in inertial navigation systems. The random drift rate of the gyroscope will seriously affect the positioning accuracy of the navigation system. Therefore, the inertial navigation system has strict requirements for the random drift rate of the gyroscope, and generally should reach 0.01°/h or even smaller.
 Through Kalman esteem, the vehicle can still navigate and track his path precisely, even in absence of GNSS (INS (Inertial Navigation System) or Dead Reckoning).
 
