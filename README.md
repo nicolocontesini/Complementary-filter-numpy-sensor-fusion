@@ -159,9 +159,9 @@ Note: alpha, representing the weight assigned to the two sensors, is usually a v
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
 ### B_max = 1.25 °/s, noise = (0.0, 0.50), τ = 0.25 s
-[Comparison](percorso/della/tua/immagine.png)
+[Comparison](comparison1.png)
 
-[RMSE](percorso/della/tua/immagine.png)
+[RMSE](RMSE1.png)
 
 ### B_max = 1.25 °/s, noise = (0.0, 0.75), τ = 0.25 s
 [Comparison](percorso/della/tua/immagine.png)
