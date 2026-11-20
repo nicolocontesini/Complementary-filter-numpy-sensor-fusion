@@ -1,5 +1,5 @@
-# numpy-sensor-fusion
-In this repository I will explore the main issue (noises) linked to signal acquirement and prove on a graph the effect of the Complementary filter on these results. Starting from a sinusoidal wave to which an artificial Gaussian noise is applied, the projects proves how the computationally inexpensive blending of sensor data (Complementary filter) can rebuild a steady signal from a disturbed one. The signal is meant to represent the value of a certain angle theta (in the graph expressed in degree) over a "t" seconds interval. For simplicity, I have chosen a 2D case, where we can imagine a drone flying.
+# A Complementary filter accuracy analysis 
+In this repository I will explore the main issue (noises) linked to signal acquirement and prove on a graph the effect of the Complementary filter on these results. Starting from a sinusoidal wave to which an artificial Gaussian noise is applied, the project proves how the computationally inexpensive blending of sensor data (Complementary filter) can rebuild a steady signal from a disturbed one. My objective is to visualise how the algorithm behaves in differents simulated scenarios, each of them determined by set bias and Gaussian Noise. For simplicity, I have chosen a 2D case, where we can imagine a drone flying.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -123,6 +123,7 @@ Due to the relationship between α and τ, a precise evaluation for τ is necess
 RMSE 
 So as to get a visible report of different results obtained through different B_max and k-drift, I decided to make the program compute the RMSE (Root Mean Square Error) for each set of 40 values, where each value correspond to one measurement acquirement from the sensor. 
 The mean value corresponds to true_angle.
+This measure is an appropriate evaluation metric because it represents the standard deviation of the residuals.
 
 
 The following section is about the esteem and the comprehension of the filter accuracy, obtained through a mathematical abstraction and analysis. 
