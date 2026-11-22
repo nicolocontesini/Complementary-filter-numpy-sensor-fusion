@@ -15,18 +15,19 @@ Note: in our simulation, a Gaussian noise will be injected into a sinusoidal wav
 
 - its fluctuations are simply added to the lean signal, making it easier to implement algorithm able to eliminate it.
 
-- the “Central Limit Theorem” states that the sum of a large number of independent random variables (as in this simulation) tends toward a Gaussian bell-curve distribution
+- the “Central Limit Theorem” states that the sum of a large number of independent random variables (as in this simulation) tends toward a Gaussian bell-curve distribution. [3]
 
 
 The Complementary Filter
 
 A complementary filter is a quick and effective method for blending measurements from an accelerometer and a gyroscope to generate an estimate for orientation.
 
-The filter works assigning specific weights to the measurements provided by the two sensors, so as to:
+The filter works assigning specific weights to the measurements provided by the two sensors, so as to [1]:
 
 -	Smooth spikes measured from the accelerometer
   
 -	Reduce the offset caused by the gyroscope drift
+  
 Before moving on a brief description of the two sensors considered for this simulation, consider the following statement, necessary to understand the conclusion drawn from each experiment.
 In the complementary filter, the value of Bias settles at a constant limit, called B_max, described by the following equation:
 
@@ -45,7 +46,7 @@ $$
 \theta = \arctan\left( \frac{a_x}{\sqrt{a_y^2 + a_z^2}} \right)
 $$
 
-where "a" represents the acceleration measured along each respective axis (x, y, z). 
+where "a" represents the acceleration measured along each respective axis (x, y, z). [1]
 However, accelerometers are highly sensitive to high-frequency noise: mechanical vibrations and external forces temporarily add up to the gravity vector, instantly distorting the true angular measurement.
 For this analysis, I assume that the sensor is only affected from noises from the system’s vibrations, and any static bias has been previously calibrated to zero.
 
@@ -124,7 +125,7 @@ Due to the relationship between α and τ, a precise evaluation for τ is necess
 RMSE 
 So as to get a visible report of different results obtained through different B_max and k-drift, I decided to make the program compute the RMSE (Root Mean Square Error) for each set of 40 values, where each value correspond to one measurement acquirement from the sensor. 
 The mean value corresponds to true_angle.
-This measure is an appropriate evaluation metric because it represents the standard deviation of the residuals.
+This measure is an appropriate evaluation metric because it represents the standard deviation of the residuals. [3]
 
 
 The following section is about the esteem and the comprehension of the filter accuracy, obtained through a mathematical abstraction and analysis. 
@@ -212,8 +213,25 @@ Most common applications
 • Signal and Audio Processing: Splits signals into complementary frequency bands (such as power- or delay-complementary filter pairs) for crossover networks and sub-band processing.
  
 Among everyday applications, a notable one is in inertial navigation systems. Everytime the GPS signal is lost (think of a car travelling inside a tunnel), an IMU (if installed) is capable of reconstructing the trajectory, rather than simply leaving a straight line between the two ends of the tunnel. A Complementary filter, though, is not the most accurate solution: for example, it cannot perform auto-correction, differently from the Kalman filter which, though the computation of a weight (the Kalman Gain) within each cycle, is able to assign greater weight to the prediction than to the measurement itself (or vice-versa, accoridng to the resulting covariance matrix). 
+The blending of these two algorithms is called CFK: a Kalman filter is used to estimate the gyroscope bias, and the complementary filter is then used for attitude estimation [4]. 
+
 
 The inertial navigation system has strict requirements for the random drift rate of the gyroscope, and generally should reach 0.01°/h or even smaller.
 Through Kalman esteem, the vehicle can still navigate and track his path precisely, even in absence of GNSS (INS (Inertial Navigation System) or Dead Reckoning).
+
+_________________________________________________________________________________________________________________________________________________________________________________________
+
+
+### Bibliography
+
+[1] https://vanhunteradams.com/Pico/ReactionWheel/Complementary_Filters.html   
+
+[2] Experimental comparison of Kalman and complementary filter for attitude estimation - Gonzalo F. Perez Paina, David Alejandro Gaydou, Javier Redolfi, Claudio José Paz, Luis Canali- 
+ https://www.researchgate.net/publication/275957000_Experimental_comparison_of_Kalman_and_complementary_filter_for_attitude_estimation
+
+[3] https://www.vectornav.com/resources/inertial-navigation-primer/math-fundamentals/math-filtering 
+
+[4] Cascaded Complementary Filter Architecture for Sensor Fusion in Attitude Estimation - Parag Narkhede, Shashi Poddar, Rahee Walambe, George Ghinea, Ketan Kotecha 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC7998881/
 
  
