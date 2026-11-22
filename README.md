@@ -1,5 +1,5 @@
 # A Complementary filter accuracy analysis 
-In this repository I will explore the main issue (noises) linked to signal acquirement and prove on a graph the effect of the Complementary filter on these results. Starting from a sinusoidal wave to which an artificial Gaussian noise is applied, the project proves how the computationally inexpensive blending of sensor data (Complementary filter) can rebuild a steady signal from a disturbed one. My objective is to visualise how the algorithm behaves in differents simulated scenarios, each of them determined by set bias and Gaussian Noise. For simplicity, I have chosen a 2D case, where we can imagine a drone flying.
+In this repository I will explore the main issue (noises) linked to signal acquirement and prove on a graph the effect of the Complementary filter. Starting from a sinusoidal wave to which an artificial Gaussian noise is applied, the project proves how the computationally inexpensive blending of sensor data (gyroscope and accelerometer) can rebuild a steady signal from a disturbed one. My objective is to visualise how the algorithm behaves in differents simulated scenarios, each of them determined by set bias and Gaussian Noise. For simplicity, I have chosen a 2D case, where we can imagine a drone flying.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -31,8 +31,8 @@ Before moving on a brief description of the two sensors considered for this simu
 In the complementary filter, the value of Bias settles at a constant limit, called B_max, described by the following equation:
 
 $$
-B_{\max} = \frac{B[\tau]}{1 - e^{-k_{\text{drift}} \cdot t}}
-$$,
+B_{\max}= \frac{B[\tau]}{1 - e^{-k_{\text{drift}} \cdot t}}
+$$
 
 where k is a constant which expresses how “fast” B(tau) is growing to B_max, t stands for time since the filter started.
 Such specification is necessary because, in absence of this formula, the simulation would have lost the crucial detail of the offset: by simply adding B to the to the true angular velocity value, the growing offset would not be visible, since a graph plotting the measured velocity would only represent “true_speed” simply offset of a value B.
@@ -45,7 +45,7 @@ $$
 \theta = \arctan\left( \frac{a_x}{\sqrt{a_y^2 + a_z^2}} \right)
 $$
 
-where a represents the acceleration measured along each respective axis (x, y, z). 
+where "a" represents the acceleration measured along each respective axis (x, y, z). 
 However, accelerometers are highly sensitive to high-frequency noise: mechanical vibrations and external forces temporarily add up to the gravity vector, instantly distorting the true angular measurement.
 For this analysis, I assume that the sensor is only affected from noises from the system’s vibrations, and any static bias has been previously calibrated to zero.
 
@@ -65,9 +65,10 @@ $$
 $$
 
 In my code, I decided to consider a constantly generated Gaussian noise to simulate disturbs such as micro-vibrations :
+
 omega_measured = true_speed + B + omega_noise.
 
-The weight
+The weight α
 
 The weight ("alpha", in the equation in the code) assigned to raw data is proportional to the level of accuracy expected from each sensor, considering both noise and offset (see above): for short time interval "tau", the algorithm expects higher reliability to the measurement from the gyroscope, since the accelerometer may detect high spikes in the change of pitch over time, due to the noise.
 
@@ -127,7 +128,7 @@ This measure is an appropriate evaluation metric because it represents the stand
 
 
 The following section is about the esteem and the comprehension of the filter accuracy, obtained through a mathematical abstraction and analysis. 
-My analysis is based both on the study of RMSE and graphs for different scenarios, each of them characterized by set weight (alpha), noise (mu/ omega_measured) and drift (B/ B_max).
+My analysis is based both on the study of RMSE and graphs for different scenarios, each of them characterized by set weight (α), noise (mu/ omega_measured) and drift (B/ B_max).
 So as to provide a simple and clear representation of the filter mechanism, I wrote a program which simulates it.
 
 -	Just like the project objective, this simulation is built upon data acquired from a gyro and an accelerometer
@@ -154,7 +155,7 @@ As a first take, make reference to the table below
 
   
 The following report shows the results obtained at different set values (I focused on alpha and drift). 
-Note: alpha, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.96 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
+Note: α, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.96 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
 
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
@@ -196,14 +197,23 @@ In the simulation I'm going to choose the most suitable τ value according to th
 
 
 ___________________________________________________________________________________________________________________________________________________________________________________
+Nowadays, many technologies are integrated with complementary filter, thanks to the low computional expense required: the algorithm avoids large matrices (suc as the state covariance matrix in a Kalman filter), matrix multiplications and inversions. It stores only a few scalar values (such as the previous angle estimate, filter gain α, and time step Δ t).
+
+Most common applications
 
 • Drones and UAVs: Estimates roll, pitch, and yaw from IMU sensors (accelerometers, gyroscopes, and magnetometers) on resource-constrained flight controllers.
+
 • Robotics and High-Vibration Environments: Tracks orientation when low compute overhead or resilience to vibration/over-ranging is needed.
+
 • Wearables, Gait, and Biomechanics: Measures human locomotion, pedestrian navigation, or animal movement by separating slow orientation changes, mid-frequency gait, and fast strikes or vibrations.
+
 • VR/AR: Provides responsive head or device tilt tracking using low-cost MEMS sensors.
+
 • Signal and Audio Processing: Splits signals into complementary frequency bands (such as power- or delay-complementary filter pairs) for crossover networks and sub-band processing.
  
-Among everyday applications, a notable one is in inertial navigation systems. The random drift rate of the gyroscope will seriously affect the positioning accuracy of the navigation system. Therefore, the inertial navigation system has strict requirements for the random drift rate of the gyroscope, and generally should reach 0.01°/h or even smaller.
+Among everyday applications, a notable one is in inertial navigation systems. Everytime the GPS signal is lost (think of a car travelling inside a tunnel), an IMU (if installed) is capable of reconstructing the trajectory, rather than simply leaving a straight line between the two ends of the tunnel. A Complementary filter, though, is not the most accurate solution: for example, it cannot perform auto-correction, differently from the Kalman filter which, though the computation of a weight (the Kalman Gain) within each cycle, is able to assign greater weight to the prediction than to the measurement itself (or vice-versa, accoridng to the resulting covariance matrix). 
+
+The inertial navigation system has strict requirements for the random drift rate of the gyroscope, and generally should reach 0.01°/h or even smaller.
 Through Kalman esteem, the vehicle can still navigate and track his path precisely, even in absence of GNSS (INS (Inertial Navigation System) or Dead Reckoning).
 
  
