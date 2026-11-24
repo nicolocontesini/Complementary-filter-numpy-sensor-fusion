@@ -109,7 +109,7 @@ f_c = \frac{1}{2\pi\tau}
 where f_c is the frequency at which the filter starts 
 
 
-The choice of τ depends on the environment the sensor is supposed to be used:
+The choice of τ depends on the environment the sensor is supposed to be used [5]:
 
 | Phenomenon | Prefers | Reason |
 | :--- | :--- | :--- |
@@ -156,39 +156,41 @@ As a first take, make reference to the table below
 
   
 The following report shows the results obtained at different set values (I focused on alpha and drift). 
-Note: α, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.96 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
+Note: α, representing the weight assigned to the two sensors, is usually a value that fluctuates between 0.90 and 0.99, causing the “complementary one” going from 0.04 and 0.01 (1-0.96 = 0.04; 1-0.97 = 0.03).
 
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
-### B_max = 1.25 °/s, noise = (0.0, 0.50), τ = 0.25 s
+### B_max = 0.05 °/s , noise = (0.0, 0.75), τ = 1.00 s (α = 0,990)
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 0.05 °/s , noise = (0.0, 1.00), τ = 1.00 s (α = 0,990) 
+[Comparison](percorso/della/tua/immagine.png)
+
+[RMSE](percorso/della/tua/immagine.png)
+
+### B_max = 0.10 °/s, noise = (0.0, 0.50), τ = 0.35 s (α = 0,972)
 [Comparison](comparison1.png)
 
 [RMSE](RMSE1.png)
 
-### B_max = 1.25 °/s, noise = (0.0, 0.75), τ = 0.25 s
+### B_max = 0.10 °/s, noise = (0.0, 0.75), τ = 0.35 s (α = 0,972)
 [Comparison](percorso/della/tua/immagine.png)
 
 [RMSE](percorso/della/tua/immagine.png)
 
-### B_max = 1.25 °/s, noise = (0.0, 0.75), τ = 0.50 s
+### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 0.15 s (α = 0,938)
 [Comparison](percorso/della/tua/immagine.png)
 
 [RMSE](percorso/della/tua/immagine.png)
 
-### B_max = 1.00 °/s, noise = (0.0, 0.75), τ = 0.50 s
+### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 0.15 s (α = 0,938)
 [Comparison](percorso/della/tua/immagine.png)
 
 [RMSE](percorso/della/tua/immagine.png)
 
-### B_max = 2.00 °/s , noise = (0.0, 0.75), τ = 0.15 s
-[Comparison](percorso/della/tua/immagine.png)
 
-[RMSE](percorso/della/tua/immagine.png)
-
-### B_max = 2.00 °/s , noise = (0.0, 1.00), τ = 0.15 s
-[Comparison](percorso/della/tua/immagine.png)
-
-[RMSE](percorso/della/tua/immagine.png)
 
 
 
@@ -234,4 +236,5 @@ ________________________________________________________________________________
 [4] Cascaded Complementary Filter Architecture for Sensor Fusion in Attitude Estimation - Parag Narkhede, Shashi Poddar, Rahee Walambe, George Ghinea, Ketan Kotecha 
 https://pmc.ncbi.nlm.nih.gov/articles/PMC7998881/
 
+[5] https://sensorimu.com/fusion/complementary
  
