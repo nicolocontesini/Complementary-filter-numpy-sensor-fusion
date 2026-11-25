@@ -161,33 +161,33 @@ Note: α, representing the weight assigned to the two sensors, is usually a valu
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
 ### B_max = 0.05 °/s , noise = (0.0, 0.75), τ = 1.00 s (α = 0,990)
-[Comparison1](comparison1.png)
+[Comparison1](images/comparison1.png)
 
-[RMSE1](RMSE1.png)
+[RMSE1](images/RMSE1.png)
 
 ### B_max = 0.05 °/s , noise = (0.0, 1.00), τ = 1.00 s (α = 0,990) 
-[Comparison2](comparison2.png)
+[Comparison2](images/comparison2.png)
 
-[RMSE2](RMSE2.png)
+[RMSE2](images/RMSE2.png)
 
 ### B_max = 0.10 °/s, noise = (0.0, 0.50), τ = 0.35 s (α = 0,972)
-[Comparison3](comparison3.png)
+[Comparison3](images/comparison3.png)
 
-[RMSE3](RMSE3.png)
+[RMSE3](images/RMSE3.png)
 
 ### B_max = 0.10 °/s, noise = (0.0, 0.75), τ = 0.35 s (α = 0,972)
-[Comparison4](comparison4.png)
+[Comparison4](images/comparison4.png)
 
-[RMSE4](RMSE4.png)
+[RMSE4](images/RMSE4.png)
 
 ### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 0.15 s (α = 0,938)
-[Comparison5](comparison5.png)
+[Comparison5](images/comparison5.png)
 
-[RMSE5](RMSE5.png)
+[RMSE5](images/RMSE5.png)
 
 ### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 1.25 s (α = 0,992)
-[Comparison6](comparison6.png)
-[RMSE6](RMSE6.png)
+[Comparison6](images/comparison6.png)
+[RMSE6](images/RMSE6.png)
 
 
 
