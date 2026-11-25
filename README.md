@@ -161,34 +161,33 @@ Note: α, representing the weight assigned to the two sensors, is usually a valu
 In the simulation I'm going to choose the most suitable τ value according to the differfent scenarios (each of them determined by set B_max and Gaussian Noise)
 
 ### B_max = 0.05 °/s , noise = (0.0, 0.75), τ = 1.00 s (α = 0,990)
-[Comparison1]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison1.png")
+[Comparison1](comparison1.png)
 
-[RMSE1]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE1.png")
+[RMSE1](RMSE1.png)
 
 ### B_max = 0.05 °/s , noise = (0.0, 1.00), τ = 1.00 s (α = 0,990) 
-[Comparison2]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison2.png")
+[Comparison2](comparison2.png)
 
-[RMSE2]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE2.png")
+[RMSE2](RMSE2.png)
 
 ### B_max = 0.10 °/s, noise = (0.0, 0.50), τ = 0.35 s (α = 0,972)
-[Comparison3]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison3.png")
+[Comparison3](comparison3.png)
 
-[RMSE3]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE3.png")
+[RMSE3](RMSE3.png)
 
 ### B_max = 0.10 °/s, noise = (0.0, 0.75), τ = 0.35 s (α = 0,972)
 [Comparison4](comparison4.png)
 
-[RMSE4]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE4.png")
+[RMSE4](RMSE4.png)
 
 ### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 0.15 s (α = 0,938)
-[Comparison5]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison5.png")
+[Comparison5](comparison5.png)
 
-[RMSE5]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE5.png")
+[RMSE5](RMSE5.png)
 
 ### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 1.25 s (α = 0,992)
-[Comparison6]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison6.png")
-
-[RMSE6]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE6.png")
+[Comparison6](comparison6.png)
+[RMSE6](RMSE6.png)
 
 
 
