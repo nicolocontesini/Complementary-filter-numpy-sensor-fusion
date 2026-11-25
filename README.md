@@ -187,8 +187,10 @@ In the simulation I'm going to choose the most suitable τ value according to th
 
 ### B_max = 0.50 °/s, noise = (0.0, 0.75), τ = 1.25 s (α = 0,992)
 [Comparison6](images/comparison6.png)
+
 [RMSE6](images/RMSE6.png)
 
+Results
 
 
 
