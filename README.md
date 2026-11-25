@@ -176,7 +176,7 @@ In the simulation I'm going to choose the most suitable τ value according to th
 [RMSE3]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE3.png")
 
 ### B_max = 0.10 °/s, noise = (0.0, 0.75), τ = 0.35 s (α = 0,972)
-[Comparison4]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\comparison4.png")
+[Comparison4](comparison4.png)
 
 [RMSE4]("C:\Users\Utente\OneDrive\Desktop\AI-projects\numpy-sensor-fusion\RMSE4.png")
 
